@@ -1,0 +1,65 @@
+﻿@model IEnumerable<EmployeeWebApp.Models.Employee>
+
+@{
+
+    ViewBag.Title = "Employee Index";
+}
+
+<h2>Employee List</h2>
+<hr />
+
+@using (Html.BeginForm("GetEmployee", "Employee", FormMethod.Get))
+{
+    if (Model != null)
+    {
+        <div class="row">
+            <div class="col-sm-2 font-weight-bold">Search Employee</div>
+            <div class=col-sm-2>@Html.TextBox("EmployeeId",null, new { @class = "form-control", @placeholder = "Employee Id"  })      </div>     
+            <div class="col-sm-3"><input type="submit" class="btn btn-success" value="Search" id="btnEmployee" /></div>
+        </div>
+    }
+    <hr />
+
+        <table class="table table-striped">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>contractTypeName</th>
+                <th>roleId</th>
+                <th>roleName</th>
+                <th>roleDescription</th>              
+                <th>Annual Salary</th>
+            </tr>
+
+
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var employee in Model)
+                    {
+                        <tr>
+                            <td>@employee.id</td>
+                            <td>@employee.name</td>
+                            <td>@employee.contractTypeName</td>
+                            <td>@employee.roleId</td>
+                            <td>@employee.roleName</td>
+                            <td>@employee.roleDescription</td>                       
+                            <td>@employee.AnnualSalary</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    if (ViewBag.Error!= null)
+                    {
+                        <tr>
+                            <td colspan="3" class="alert-danger">@ViewBag.Error</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="8"><input type="submit" class="btn btn-success" value="Get employees" id="btnEmployee" /></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+}
